@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/Nithanaroy/jsonschemamodel/issues"
   },
-  "homepage": "https://github.com/Nithanaroy/jsonschemamodel#readme"
+  "homepage": "https://github.com/Nithanaroy/jsonschemamodel#readme",
+  "dependencies": {
+    "jsonschema": "^1.2.0"
+  }
 }

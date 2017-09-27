@@ -1,0 +1,3 @@
+dist/*
+testDist/*
+node_modules/*
