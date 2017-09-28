@@ -28,13 +28,20 @@ const schema = {
   },
   "required": [ "name", "description", "apple_directory_group", "prefix" ]
 };
-let eventGroup = new JSONModel( schema, {
+
+const props = {
   "idProp": "id",
   "url": "http://localhost:9000/api/v1/event_group",
-  "parseInstanceProp": "result"
-});
+  "parseInstanceProp": "result",
+  "parseListProp": "result"
+};
+
+let eventGroup = new JSONModel( schema, props );
 eventGroup.name = "Sample event Group";
 eventGroup.description = "Sample event Group description";
 eventGroup.apple_directory_group = "Sample user Group";
 eventGroup.prefix = "Sample event Group prefix";
-eventGroup.save().then( savedEventGroup => console.log( savedEventGroup ) ).catch( err => console.log( err ) );
+// eventGroup.save().then( savedEventGroup => console.log( savedEventGroup ) ).catch( err => console.log( err ) );
+
+JSONModel.find( "58e57b2de10000e1006b21fb", schema, props ).then( e => console.log( e ) ).catch( err => console.log( err ) );
+// JSONModel.find({}, schema, props ).then( e => console.log( e[0].author ) ).catch( err => console.log( err ) );

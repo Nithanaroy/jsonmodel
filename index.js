@@ -3,14 +3,30 @@ const axios = require( "axios" );
 const errorMessageGenerator = require( "./error_generator" ).generateErrorMessages;
 
 class JSONModel{
-  constructor ( schema, { idProp = "id", url, parseInstanceProp } = {}) {
+  constructor ( schema = {}, settings = {}) {
     this.__schema = schema; // TODO: Validate if its a valid JSON schema
-    this.__idProp = idProp;
-    this.__url = url;
-    this.__parseInstanceProp = parseInstanceProp;
+    this.__settings = settings;
   }
-  async find () {
-
+  static async find ( criteria = {}, schema = {}, settings = {}) {
+    let isFindAllRequest = typeof criteria === "object";
+    let response;
+    if ( isFindAllRequest ){
+      let res = [];
+      response = await axios.get( settings.url, { "params": criteria });
+      for ( let modelJson of response.data[settings.parseListProp] ){
+        res.push( this.__deserialize( modelJson, schema, settings ) );
+      }
+      return res;
+    } else {
+      // find one request
+      response = await axios.get( `${settings.url}/${criteria}` );
+      return this.__deserialize( response.data[settings.parseInstanceProp], schema, settings );
+    }
+  }
+  static __deserialize ( jsonResponse, schema, settings ) {
+    let j = new JSONModel( schema, settings );
+    j.__updateSelf( jsonResponse );
+    return j;
   }
   /**
    * Save or update an existing model instance
@@ -21,15 +37,15 @@ class JSONModel{
   async save () {
     const validationResult = validate( this, this.__schema );
     const errors = errorMessageGenerator( validationResult, this.__schema );
-    const isNewModel = typeof this[this.__idProp] === "undefined";
+    const isNewModel = typeof this[this.__settings.idProp] === "undefined";
     if ( errors.length === 0 ){
       let response;
       if ( isNewModel ){
-        response = await axios.post( this.__url, this.__requestPayload );
+        response = await axios.post( this.__settings.url, this.__requestPayload );
       } else {
-        response = await axios.put( this.__url, this.__requestPayload );
+        response = await axios.put( this.__settings.url, this.__requestPayload );
       }
-      this.__updateSelf( response.data[this.__parseInstanceProp] );
+      this.__updateSelf( response.data[this.__settings.parseInstanceProp] );
       return this;
     }
     throw new Error( errors );
