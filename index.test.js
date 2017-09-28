@@ -1,4 +1,4 @@
-const JSONModel = require( "./index" ).JSONModel;
+const { JSONModel } = require( "./index" );
 
 const schema = {
   "title": "Event Group",
@@ -17,7 +17,7 @@ const schema = {
       "type": "string",
       "error_messages": { "required": "Description is required" }
     },
-    "user_group": {
+    "apple_directory_group": {
       "type": "string",
       "error_messages": { "required": "User group is required" }
     },
@@ -26,11 +26,15 @@ const schema = {
       "error_messages": { "required": "Prefix is required" }
     }
   },
-  "required": [ "name", "description", "user_group", "prefix" ]
+  "required": [ "name", "description", "apple_directory_group", "prefix" ]
 };
-let eventGroup = new JSONModel( schema );
+let eventGroup = new JSONModel( schema, {
+  "idProp": "id",
+  "url": "http://localhost:9000/api/v1/event_group",
+  "parseInstanceProp": "result"
+});
 eventGroup.name = "Sample event Group";
-// eventGroup.description = "Sample event Group description";
-// eventGroup.user_group = "Sample user Group";
+eventGroup.description = "Sample event Group description";
+eventGroup.apple_directory_group = "Sample user Group";
 eventGroup.prefix = "Sample event Group prefix";
-console.log( eventGroup.save() );
+eventGroup.save().then( savedEventGroup => console.log( savedEventGroup ) ).catch( err => console.log( err ) );

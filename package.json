@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/Nithanaroy/jsonschemamodel#readme",
   "dependencies": {
+    "axios": "^0.16.2",
     "jsonschema": "^1.2.0"
   }
 }
