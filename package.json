@@ -2,7 +2,7 @@
   "name": "jsonschemamodel",
   "version": "0.1.0",
   "description": "A model class which manages CRUD and validation using JSON Schema",
-  "main": "index.js",
+  "main": "json_model.js",
   "scripts": {
     "test": "mocha --reporter spec"
   },

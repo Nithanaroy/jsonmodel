@@ -1,4 +1,4 @@
-const { JSONModel } = require( "./index" );
+const JSONModel = require( "./json_model" );
 
 const schema = {
   "title": "Event Group",
@@ -24,6 +24,10 @@ const schema = {
     "prefix": {
       "type": "string",
       "error_messages": { "required": "Prefix is required" }
+    },
+    "personal": {
+      "type": "string",
+      "serialize": false
     }
   },
   "required": [ "name", "description", "apple_directory_group", "prefix" ]
@@ -36,12 +40,24 @@ const props = {
   "parseListProp": "result"
 };
 
-let eventGroup = new JSONModel( schema, props );
+// let eventGroup = new JSONModel( schema, props );
+// eventGroup.name = "Sample event Group";
+// eventGroup.description = "Sample event Group description";
+// eventGroup.apple_directory_group = "Sample user Group";
+// eventGroup.prefix = "Sample event Group prefix";
+// // eventGroup.save().then( savedEventGroup => console.log( savedEventGroup ) ).catch( err => console.log( err ) );
+
+// JSONModel.find( "58e57b2de10000e1006b21fb", schema, props ).then( e => console.log( e ) ).catch( err => console.log( err ) );
+// // JSONModel.find({}, schema, props ).then( e => console.log( e[0].author ) ).catch( err => console.log( err ) );
+
+let EventGroup = JSONModel.create( schema, props );
+// EventGroup.find( "58e57b2de10000e1006b21fb" ).then( e => console.log( e ) ).catch( err => console.log( err ) );
+// EventGroup.find( ).then( e => console.log( e ) ).catch( err => console.log( err ) );
+
+let eventGroup = new EventGroup();
 eventGroup.name = "Sample event Group";
 eventGroup.description = "Sample event Group description";
 eventGroup.apple_directory_group = "Sample user Group";
 eventGroup.prefix = "Sample event Group prefix";
-// eventGroup.save().then( savedEventGroup => console.log( savedEventGroup ) ).catch( err => console.log( err ) );
-
-JSONModel.find( "58e57b2de10000e1006b21fb", schema, props ).then( e => console.log( e ) ).catch( err => console.log( err ) );
-// JSONModel.find({}, schema, props ).then( e => console.log( e[0].author ) ).catch( err => console.log( err ) );
+eventGroup.personal = "Personal check";
+eventGroup.save().then( e => console.log( e ) ).catch( err => console.log( err ) );
