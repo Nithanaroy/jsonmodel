@@ -43,11 +43,11 @@ const josh = new Person({name: "Josh", age: 35}); // create another person using
 josh.save();
 josh.delete(); // makes a DELETE request
 
-const alice = Person.find(673653); // makes a GET /personAPI/673653
+const alice = await Person.find(673653); // makes a GET /personAPI/673653
 alice.age = 40;
 alice.save(); // makes a PUT
 
-const someJohns = Person.find({name: "john", age: 35}); // makes a GET /personAPI?name=john&age=35
+const someJohns = await Person.find({name: "john", age: 35}); // makes a GET /personAPI?name=john&age=35
 someJohns.forEach(j => {
     j.name = "John"; // make changes
     j.save(); // makes a PUT
@@ -134,6 +134,54 @@ A sample settings object is,
 }
 ```
 
+#### Returns 
+
+a JSON Model class which can be used to create instances.
+
+```javascript
+const Person = new JSONModel(schema, settings);
+const john = new Person({name: "john"});
+john.age = 34;
+```
+
+### `save()`
+
+This function is available on an instance of JSON Model class like `john` above. The same method is used for create as well as update. The method decides to make a POST or PUT request based on presence of an ID value.
+
+```javascript
+const Person = new JSONModel(schema, {"idProp": "id", ..});
+const john = new Person({name: "john"});
+console.log(john.id); // => undefined
+const savePromise = john.save(); // makes a POST
+
+john.age = 35;
+console.log(john.id); // => 43543535 (some ID sent by server)
+john.save(); // makes a PUT
+```
+
+### `find()`
+
+This function is available on the class itself like `Person` above. It can be used to either fetch an instance by ID or search params which will be turned to a query string.
+
+```javascript
+const Person = new JSONModel(schema, settings);
+const IDOfJohn = 324234234;
+const john = await Person.find(IDOfJohn); // makes a GET /personAPI/324234234
+// Use john instance like before
+
+const someJohns = await Person.find({name: "john"}); // makes a GET /persnAPI?name=john
+```
+Each object in `someJohns` above is an instance of `Person` class and has access to `save()` and `delete()` methods.
+
+### `delete()`
+
+This function is available on the instance objects. The API is still under development but is planned to make a DELETE REST request.
+
+## Contributing to the code
+
+JSONModel is a nice abstraction which makes mundane tasks like validations and CRUD calls elegant and easy to use. There is still lot of interesting work to do listed below. Always happy to merge a pull request!
+
 ## TODO
 - [ ] optional `parseInstanceProp` and `parseListProp` settings
 - [ ] validation of nested objects
+- [ ] delete API

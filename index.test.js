@@ -22,7 +22,7 @@ const schema = {
       "error_messages": { "required": "Prefix is required" }
     }
   },
-  "required": [ "name", "description", "apple_directory_group", "prefix" ]
+  "required": [ "name", "description", "prefix" ]
 };
 
 const props = {
