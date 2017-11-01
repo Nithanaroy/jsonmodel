@@ -4,7 +4,7 @@
   "description": "A model class which manages CRUD and validation using JSON Schema",
   "main": "json_model.js",
   "scripts": {
-    "test": "mocha --reporter spec"
+    "test": "echo \"tests are in progress\""
   },
   "repository": {
     "type": "git",
