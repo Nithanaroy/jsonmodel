@@ -55,7 +55,7 @@ someJohns.forEach(j => {
 ```
 ## API
 
-The code, index.js file is < 100 lines of code easy enough to read.
+The code, json_model.js file is < 100 lines of code easy enough to read.
 
 ### `JSONModel.create(schema, settings)`
 

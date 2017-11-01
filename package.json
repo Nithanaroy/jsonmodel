@@ -1,5 +1,5 @@
 {
-  "name": "jsonschemamodel",
+  "name": "jsonmodel",
   "version": "0.1.0",
   "description": "A model class which manages CRUD and validation using JSON Schema",
   "main": "json_model.js",
@@ -26,5 +26,8 @@
   "dependencies": {
     "axios": "^0.16.2",
     "jsonschema": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=8.2.1"
   }
 }
