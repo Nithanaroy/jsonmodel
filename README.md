@@ -1,4 +1,4 @@
-## JSONModel
+## JSONModel  [![Build Status](https://travis-ci.org/Nithanaroy/jsonmodel.svg?branch=master)](https://travis-ci.org/Nithanaroy/jsonmodel)
 
 JSONModel is a tiny yet powerful library which does three things:
 - Provides utility functions for save, update, find and delete without developer needing to write verbose AJAX apis
